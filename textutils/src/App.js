@@ -1,38 +1,74 @@
+// import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import './App.css';
+import About from './Component/About';
+import Alart from './Component/Alart';
+import Navbar from './Component/Navbar';
+import TextForm from './Component/TextForm';
+import React, {useState} from 'react'
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   // Routes
+//   // Link
+// } from "react-router-dom";
+
 
 function App() {
+  const [mode, setMode] = useState('light')  //Enable dark Mode
+  const [alart, setAlart] = useState(null)  
+
+  const showAlart = (message, type) => {
+    setAlart({
+      msg : message,
+      type : type
+    })
+    setTimeout(() => {
+      setAlart(null)
+    }, 2000);
+  }
+
+
+
+
+  const toggleMode = () => {
+    if(mode === 'dark') {
+      setMode('light');
+      document.body.style.backgroundColor = 'white';
+      showAlart("Light Mode is enable", "success");
+    }
+    else{
+      setMode('dark');
+      document.body.style.backgroundColor = '#160838';
+      showAlart("Dark Mode is enable", "success");
+    }
+  }
+
+
+  // const toggleModeGray = () => {
+  //   document.body.style.backgroundColor = 'secondary';
+  //   showAlart("Gray Mode is enable", "success");
+  // }
+// const toggleModeGreen = () => {
+//     document.body.style.backgroundColor = 'success';
+//     showAlart("Gray Mode is enable", "success");
+//   }
+// const toggleModeRed = () => {
+//     document.body.style.backgroundColor = 'denger';
+//     showAlart("Gray Mode is enable", "success");
+//   }
+// const toggleModeYellow = () => {
+//     document.body.style.backgroundColor = 'warning';
+//     showAlart("Gray Mode is enable", "success");
+//   }
+
+
   return (
     <>
-          <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="/">Textutils</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/">Home</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/">Link</a>
-              </li>
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  About
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link disabled" aria-disabled="true">Anything</a>
-              </li>
-            </ul>
-            <form className="d-flex" role="search">
-              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-              <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
+      <Alart alart = {alart} />
+      <Navbar title = "TextUtils" home = "HOME"  mode = {mode} toggleMode = {toggleMode} />
+      <TextForm showAlart = {showAlart} heading = "Write anything what you want" mode = {mode} /> 
+      <About />
     </>
   );
 }
